@@ -2,7 +2,7 @@ import urllib.request
 from pypdf import PdfReader
 import pandas as pd
 import re
-
+import sqlite3
 def fetchincidents(url):
     headers = {}
     headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"                          
@@ -12,7 +12,6 @@ def fetchincidents(url):
 
 def extractincidents(pdf):
     page = PdfReader(pdf).pages[0]
-    # print(page.extract_text(layout_mode='layout', layout_mode_scale_weight=2.0))
     data = page.extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
     
     
@@ -20,7 +19,7 @@ def extractincidents(pdf):
     columns = ['Date / Time', 'Incident Number', 'Location', 'Nature', 'Incident ORI']
     rows = []
     for line in lines:
-        split_line =[]
+        split_line = []
         for field in line.split("          "):
             if field != "":
                 split_line.append(field.strip())
@@ -29,8 +28,17 @@ def extractincidents(pdf):
     print(rows)
     
     
+    conn = sqlite3.connect("docs/tutorial.db")
+    
+    cursor = conn.cursor()
+    
+    cursor.execute("CREATE TABLE IF NOT EXISTS incidents (incident_time TEXT, incident_number TEXT, incident_location TEXT, nature TEXT, incident_ori TEXT)")
     
     
+    cursor.executemany("INSERT INTO incidents VALUES(?, ?, ?, ?, ?)", rows)
+    
+    conn.commit()
+    conn.close()
     
 
 if __name__ == "__main__":
