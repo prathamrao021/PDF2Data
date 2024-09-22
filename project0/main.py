@@ -1,6 +1,7 @@
 import urllib.request
 from pypdf import PdfReader
 import pandas as pd
+import re
 
 def fetchincidents(url):
     headers = {}
@@ -14,13 +15,19 @@ def extractincidents(pdf):
     # print(page.extract_text(layout_mode='layout', layout_mode_scale_weight=2.0))
     data = page.extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
     
-    print(data)
+    
     lines = (data.split("\n"))[3:]
+    columns = ['Date / Time', 'Incident Number', 'Location', 'Nature', 'Incident ORI']
+    rows = []
+    for line in lines:
+        split_line =[]
+        for field in line.split("          "):
+            if field != "":
+                split_line.append(field.strip())
+        rows.append(split_line)
     
-    records = [line.split() for line in lines]
+    print(rows)
     
-    df = pd.DataFrame(records)
-    # print(df)
     
     
     
