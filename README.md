@@ -41,7 +41,15 @@ pipenv run python main.py
   * Returns: None.
 
 ## Database Development
-...
+The database is developed using SQLite and includes a single table, incidents, with the following columns:
+* `incident_time` (TEXT)
+* `incident_number` (TEXT)
+* `incident_location` (TEXT)
+* `nature` (TEXT)
+* `incident_ori` (TEXT)
 
+The database is created with the `createdb()` function and populated by the `populatedb()` function.
 ## Bugs and Assumptions
-...
+* Multi-line addresses and fields are assumed to belong to the same incident and are concatenated as part of the parsing logic.
+* Some incidents may not follow the expected pattern, which could lead to incomplete or incorrect rows being added to the database.
+* Assumes the PDF file structure remains consistent throughout the document.
