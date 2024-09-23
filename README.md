@@ -21,32 +21,24 @@ pipenv run python main.py
 
 ## Functions
 `main.py`
-* fetchincidents(pdf)
+* `fetchincidents(pdf)`
   Parameters: Path to the PDF file.
   Process: Extracts the text from the PDF using PdfReader, concatenating all pages' text into a single string.
   Returns: A string of raw incident report data.
 
-* extractincidents(data)
+* `extractincidents(data)`
   Parameters: Raw text data from the PDF.
   Process:Splits the data into lines and processes it to extract relevant fields, handling multi-line addresses.
   Returns: A list of rows, where each row represents a structured incident report.
-  
-* Splits the text into lines.
-Removes header/footer lines and processes incident lines by splitting fields.
-Handles multi-line fields like addresses. Returns: A list of rows, each representing a structured incident report (date/time, incident number, location, etc.).
-createdb()
-Process:
 
-Creates an SQLite database with a table named incidents.
-The table contains the columns for storing incident details: incident_time, incident_number, incident_location, nature, and incident_ori.
-Returns: None.
-populatedb(separated_data)
-Parameters: List of extracted incidents data.
-Process:
+* `createdb()`
+  Process: Creates an SQLite database with a table named incidents. The table contains the columns for storing incident details: incident_time, incident_number, incident_location, nature, and incident_ori.
+  Returns: None.
 
-Iterates over the list of incident rows.
-Inserts each row into the SQLite database incidents table.
-Returns: None.
+* `populatedb(separated_data)`
+  Parameters: List of extracted incidents data.
+  Process: Inserts each row into the SQLite database incidents table.
+  Returns: None.
 
 ## Database Development
 ...
