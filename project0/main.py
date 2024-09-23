@@ -3,44 +3,74 @@ from pypdf import PdfReader
 import pandas as pd
 import re
 import sqlite3
-def fetchincidents(url):
-    headers = {}
-    headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"                          
 
-    data = urllib.request.urlopen(urllib.request.Request(url, headers=headers)).read()
-    print(data)
 
-def extractincidents(pdf):
-    page = PdfReader(pdf).pages[0]
-    data = page.extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
+
+def fetchincidents(pdf):
+    reader = PdfReader(pdf)
+    data = ''
+    for page in reader.pages:
+        data = data + "\n" + page.extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
+    # with open('docs/test.txt','w') as file:
+    #     file.write(data)
+    return data
+
+
+def extractincidents(data):
     
-    
-    lines = (data.split("\n"))[3:]
+    lines = (data.split("\n"))[3:-1]
     columns = ['Date / Time', 'Incident Number', 'Location', 'Nature', 'Incident ORI']
     rows = []
+    # for line in lines:
+    #     split_line = []
+    #     for field in line.split("          "):
+    #         if field != "":
+    #             split_line.append(field.strip())
+    #     rows.append(split_line)
+    # return rows
+    temp_row = []
     for line in lines:
-        split_line = []
-        for field in line.split("          "):
-            if field != "":
-                split_line.append(field.strip())
-        rows.append(split_line)
+        split_line = [field.strip() for field in line.split("          ") if field.strip()]
+
+        if len(split_line) < len(columns):
+            if len(temp_row) > 0:
+                temp_row[2] += " " + split_line[0]
+        else:
+            if len(temp_row) == len(columns):
+                rows.append(temp_row)
+            temp_row = split_line  
     
-    print(rows)
+    if len(temp_row) == len(columns):
+        rows.append(temp_row)
+    
+    return rows
     
     
+def createdb():
     conn = sqlite3.connect("docs/tutorial.db")
     
     cursor = conn.cursor()
     
     cursor.execute("CREATE TABLE IF NOT EXISTS incidents (incident_time TEXT, incident_number TEXT, incident_location TEXT, nature TEXT, incident_ori TEXT)")
     
-    
-    cursor.executemany("INSERT INTO incidents VALUES(?, ?, ?, ?, ?)", rows)
-    
     conn.commit()
     conn.close()
+
+
+def populatedb(separated_data):
+    conn = sqlite3.connect("docs/tutorial.db")
     
+    cursor = conn.cursor()
+    
+    cursor.executemany("INSERT INTO incidents VALUES(?, ?, ?, ?, ?)", separated_data)
+    conn.commit()
+    conn.close()
 
 if __name__ == "__main__":
-    # fetchincidents("https://www.normanok.gov/sites/default/files/documents/2024-08/2024-08-02_daily_arrest_summary.pdf")
-    extractincidents("docs/Incidetnt1.pdf")
+    
+    data = fetchincidents("docs/Incidetnt1.pdf")
+    separated_data = extractincidents(data)
+    createdb()
+    populatedb(separated_data)
+    
+    
