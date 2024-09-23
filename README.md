@@ -21,10 +21,10 @@ pipenv run python main.py
 
 ## Functions
 `main.py`
-fetchincidents(pdf)
-Parameters: Path to the PDF file.
-Process: Extracts the text from the PDF using PdfReader, concatenating all pages' text into a single string.
-Returns: A string of raw incident report data.
+  fetchincidents(pdf)
+  Parameters: Path to the PDF file.
+  Process: Extracts the text from the PDF using PdfReader, concatenating all pages' text into a single string.
+  Returns: A string of raw incident report data.
 
 extractincidents(data)
 Parameters: Raw text data from the PDF.
