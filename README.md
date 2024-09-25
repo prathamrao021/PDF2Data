@@ -14,13 +14,25 @@ pipenv install
 
 ## How to Run
 ```bash
-pipenv run python main.py
+pipenv run python project0/main.py --incidents <Incident_URL>
 ```
+Replace `Incident_URL` with the actual URL of the incident summary PDF.
 ![video](video)
 
+## How to Run Tests
+To run test, execute the main.py code first in order to generate the file in dedicated location.
+To run the test suite with `pytest`, execute the following command:
+```bash
+pipenv run python -m pytest
+```
 
 ## Functions
 `main.py`
+* `downloaddata(url)`
+  * Parameters: URL to the PDF file.
+  * Process: Downloads the incident PDF from the provided URL and saves it locally as `incident1.pdf`.
+  * Returns: The name of the saved file `(incident1.pdf)`.
+
 * `fetchincidents(pdf)`
   * Parameters: Path to the PDF file.
   * Process: Extracts the text from the PDF using PdfReader, concatenating all pages' text into a single string.
@@ -41,7 +53,7 @@ pipenv run python main.py
   * Returns: None.
 
 ## Database Development
-The database is developed using SQLite and includes a single table, incidents, with the following columns:
+The database `tutorial.db` is developed using SQLite and includes a single table, incidents, with the following columns:
 * `incident_time` (TEXT)
 * `incident_number` (TEXT)
 * `incident_location` (TEXT)
