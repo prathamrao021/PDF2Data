@@ -52,6 +52,28 @@ pipenv run python -m pytest
   * Process: Inserts each row into the SQLite database incidents table.
   * Returns: None.
 
+## Test Functions
+`test_main.py`
+* `test_downloaddata()`
+  * Process: Tests the `downloaddata` function by providing a sample URL and verifying that the file is downloaded and saved as `incident1.pdf`.
+  * Returns: None.
+
+* `test_fetchincidents()`
+  * Process: Tests the `fetchincidents` function by providing a sample PDF file and verifying that the extracted text matches the expected output.
+  * Returns: None.
+
+* `test_extractincidents()`
+  * Process: Tests the `extractincidents` function by providing sample raw text data and verifying that the extracted rows match the expected structured data.
+  * Returns: None.
+
+* `test_createdb()`
+  * Process: Tests the `createdb` function by verifying that the SQLite database and the incidents table are created successfully.
+  * Returns: None.
+
+* `test_populatedb()`
+  * Process: Tests the `populatedb` function by providing sample extracted incidents data and verifying that the data is inserted into the SQLite database correctly.
+  * Returns: None.
+  
 ## Database Development
 The database `tutorial.db` is developed using SQLite and includes a single table, incidents, with the following columns:
 * `incident_time` (TEXT)
