@@ -3,8 +3,16 @@ from pypdf import PdfReader
 import pandas as pd
 import re
 import sqlite3
+import argparse
 
+def downloaddata(url):
+    headers = {}
+    headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"                          
 
+    data = urllib.request.urlopen(urllib.request.Request(url, headers=headers)).read()
+    with open(f'resources/incident1.pdf', 'wb') as file:
+        file.write(data)
+    return 'incident1.pdf'
 
 def fetchincidents(pdf):
     reader = PdfReader(pdf)
@@ -47,7 +55,7 @@ def extractincidents(data):
     
     
 def createdb():
-    conn = sqlite3.connect("docs/tutorial.db")
+    conn = sqlite3.connect("resources/tutorial.db")
     
     cursor = conn.cursor()
     
@@ -58,7 +66,7 @@ def createdb():
 
 
 def populatedb(separated_data):
-    conn = sqlite3.connect("docs/tutorial.db")
+    conn = sqlite3.connect("resources/tutorial.db")
     
     cursor = conn.cursor()
     
@@ -68,7 +76,13 @@ def populatedb(separated_data):
 
 if __name__ == "__main__":
     
-    data = fetchincidents("docs/Incidetnt1.pdf")
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--incidents", type=str, required=True, help="Incident summary url.")
+    args = parser.parse_args()
+    
+    filename = downloaddata(args.incidents)
+    data = fetchincidents("resources/incident1.pdf")
     separated_data = extractincidents(data)
     createdb()
     populatedb(separated_data)
