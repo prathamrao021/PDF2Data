@@ -1,8 +1,9 @@
-from project0.main import fetchincidents, extractincidents, createdb, populatedb
+from project0.main import downloaddata, fetchincidents, extractincidents, createdb, populatedb
 import os
 import sqlite3
 
 def test_download_data():
+    downloaddata("https://www.normanok.gov/sites/default/files/documents/2024-08/2024-08-01_daily_incident_summary.pdf")
     assert os.path.exists("resources/incident1.pdf")    
 
 def test_fetch_incidents():
