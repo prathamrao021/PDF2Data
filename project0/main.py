@@ -74,6 +74,17 @@ def populatedb(separated_data):
     conn.commit()
     conn.close()
 
+def status():
+    conn = sqlite3.connect("resources/tutorial.db")
+    
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT nature, count(nature) FROM incidents GROUP BY nature ORDER BY nature ASC")
+    printables = cursor.fetchall()
+    for i in printables:
+        print(f"{i[0]}|{i[1]}")
+    conn.close()
+
 if __name__ == "__main__":
     
     
@@ -86,5 +97,6 @@ if __name__ == "__main__":
     separated_data = extractincidents(data)
     createdb()
     populatedb(separated_data)
+    status()
     
     
