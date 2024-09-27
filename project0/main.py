@@ -4,7 +4,7 @@ import pandas as pd
 import re
 import sqlite3
 import argparse
-
+import os
 def downloaddata(url):
     headers = {}
     headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"                          
@@ -27,7 +27,6 @@ def fetchincidents(pdf):
 def extractincidents(data):
     
     lines = (data.split("\n"))[3:-1]
-    columns = ['Date / Time', 'Incident Number', 'Location', 'Nature', 'Incident ORI']
     rows = []
     # for line in lines:
     #     split_line = []
@@ -40,21 +39,23 @@ def extractincidents(data):
     for line in lines:
         split_line = [field.strip() for field in line.split("          ") if field.strip()]
 
-        if len(split_line) < len(columns):
+        if len(split_line) < 5:
             if len(temp_row) > 0:
                 temp_row[2] += " " + split_line[0]
         else:
-            if len(temp_row) == len(columns):
+            if len(temp_row) == 5:
                 rows.append(temp_row)
             temp_row = split_line  
     
-    if len(temp_row) == len(columns):
+    if len(temp_row) == 5:
         rows.append(temp_row)
     
     return rows
     
     
 def createdb():
+    if os.path.exists("resources/tutorial.db"):
+        os.remove("resources/tutorial.db")
     conn = sqlite3.connect("resources/tutorial.db")
     
     cursor = conn.cursor()
@@ -81,9 +82,14 @@ def status():
     
     cursor.execute("SELECT nature, count(nature) FROM incidents GROUP BY nature ORDER BY nature ASC")
     printables = cursor.fetchall()
-    for i in printables:
-        print(f"{i[0]}|{i[1]}")
+    data = ''
+    with open("resources/status.txt", "w") as file:
+        for i in printables:
+            file.write(f"{i[0]}|{i[1]}\n")
+            data += f"{i[0]}|{i[1]}\n"
+    print(data)
     conn.close()
+    return data 
 
 if __name__ == "__main__":
     

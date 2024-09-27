@@ -1,4 +1,4 @@
-from project0.main import downloaddata, fetchincidents, extractincidents, createdb, populatedb
+from project0.main import downloaddata, fetchincidents, extractincidents, createdb, populatedb, status
 import os
 import sqlite3
 
@@ -24,6 +24,7 @@ def test_create_db():
 def test_populate_db():
     data = fetchincidents("resources/incident1.pdf")
     separated_data = extractincidents(data)
+    createdb()
     populatedb(separated_data)
     conn = sqlite3.connect("resources/tutorial.db")
     cursor = conn.cursor()
@@ -31,3 +32,20 @@ def test_populate_db():
     results = cursor.fetchall()
     assert len(results) != 0
     conn.close()
+
+def test_status():
+    data = fetchincidents("resources/incident1.pdf")
+    separated_data = extractincidents(data)
+    createdb()
+    
+    populatedb(separated_data)
+    try_data = status()
+    
+    data = ''
+    with open("resources/status.txt", "r") as file:
+        lines = file.readlines()
+    
+    for i in lines:
+        data += i
+    assert data==try_data
+    
