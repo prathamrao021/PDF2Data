@@ -18,7 +18,7 @@ pipenv run python project0/main.py --incidents <Incident_URL>
 ```
 Replace `Incident_URL` with the actual URL of the incident summary PDF.
 [Demo Video](https://github.com/user-attachments/assets/d5fa41f4-091a-44af-b5b2-2873759435ab)
-
+Incidents can be fetched from the [Norman Police Report Webpage](https://www.normanok.gov/public-safety/police-department/crime-prevention-data/department-activity-reports)
 ## How to Run Tests
 To run test, execute the main.py code first in order to generate the file in dedicated location.
 To run the test suite with `pytest`, execute the following command:
