@@ -52,6 +52,11 @@ pipenv run python -m pytest
   * Process: Inserts each row into the SQLite database incidents table.
   * Returns: None.
 
+* `status()`
+  * Process: Connects to the SQLite database and queries the `incidents` table to get the count of records. Returns a string indicating the total number of incidents in the database.
+  * Returns: A string with the total number of incidents in the database.
+
+
 ## Test Functions
 `test_main.py`
 * `test_downloaddata()`
@@ -73,7 +78,11 @@ pipenv run python -m pytest
 * `test_populatedb()`
   * Process: Tests the `populatedb` function by providing sample extracted incidents data and verifying that the data is inserted into the SQLite database correctly.
   * Returns: None.
-  
+
+* `test_status()`
+  * Process: Tests the `status` function by verifying that it correctly returns the data from the `incident1.pdf` and matches it with the processed data from the test function.
+  * Returns: None.
+
 ## Database Development
 The database `tutorial.db` is developed using SQLite and includes a single table, incidents, with the following columns:
 * `incident_time` (TEXT)
