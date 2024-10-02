@@ -17,7 +17,7 @@ pipenv install
 pipenv run python project0/main.py --incidents <Incident_URL>
 ```
 Replace `Incident_URL` with the actual URL of the incident summary PDF.
-[Screencast from 09-25-2024 04:14:59 PM.webm](https://github.com/user-attachments/assets/d5fa41f4-091a-44af-b5b2-2873759435ab)
+[Demo Video](https://github.com/user-attachments/assets/d5fa41f4-091a-44af-b5b2-2873759435ab)
 
 ## How to Run Tests
 To run test, execute the main.py code first in order to generate the file in dedicated location.
