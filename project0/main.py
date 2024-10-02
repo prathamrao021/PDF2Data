@@ -108,7 +108,7 @@ if __name__ == "__main__":
     data = fetchincidents("resources/incident1.pdf")
     separated_data = extractincidents(data)
     createdb()
-    populatedb(separated_data)
+    populatedb(separated_data[1:])
     status()
     
     
