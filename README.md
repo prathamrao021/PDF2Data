@@ -102,5 +102,5 @@ The database is created with the `createdb()` function and populated by the `pop
 - [x] populatedb(db, incidents)
 - [x] status()
 - [x] pipenv run python -m pytest
-- [ ] git tag v1.0
-- [ ] git push origin v1.0
+- [x] git tag v1.0
+- [x] git push origin v1.0
