@@ -75,24 +75,52 @@ def populatedb(separated_data):
     conn.commit()
     conn.close()
 
+# def status():
+#     conn = sqlite3.connect("resources/normanpd.db")
+    
+#     cursor = conn.cursor()
+    
+#     cursor.execute("SELECT nature, count(nature) FROM incidents GROUP BY nature ORDER BY nature ASC")
+#     printables = cursor.fetchall()
+#     data = ''
+#     with open("resources/status.txt", "w") as file:
+#         for i,v in enumerate(printables):
+#             if v[0] == "Nature":
+#                 continue
+#             if i != len(printables) - 1:
+#                 file.write(f"{v[0]}|{v[1]}\n")
+#                 data += f"{v[0]}|{v[1]}\n"
+#             else:
+#                 file.write(f"{v[0]}|{v[1]}")
+#                 data += f"{v[0]}|{v[1]}"
+#     conn.close()
+#     print(data)
+#     return data
+
+
 def status():
     conn = sqlite3.connect("resources/normanpd.db")
     
     cursor = conn.cursor()
-    
-    cursor.execute("SELECT nature, count(nature) FROM incidents GROUP BY nature ORDER BY nature ASC")
+    cursor.execute("SELECT nature FROM incidents")
     printables = cursor.fetchall()
+    dictionary = {}
     data = ''
+    for i in sorted(printables[1:]):
+        if i[0] not in dictionary:
+            dictionary[i[0]] = 1
+        else:
+            dictionary[i[0]] += 1
+    i = 0 
+    for key, value in dictionary.items():
+        if i != len(dictionary) - 1:
+            data += f"{key}|{value}\n"
+        else:
+            data += f"{key}|{value}"
+        i += 1
+    
     with open("resources/status.txt", "w") as file:
-        for i,v in enumerate(printables):
-            if v[0] == "Nature":
-                continue
-            if i != len(printables) - 1:
-                file.write(f"{v[0]}|{v[1]}\n")
-                data += f"{v[0]}|{v[1]}\n"
-            else:
-                file.write(f"{v[0]}|{v[1]}")
-                data += f"{v[0]}|{v[1]}"
+        file.write(data)
     conn.close()
     print(data)
     return data 
