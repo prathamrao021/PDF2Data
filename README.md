@@ -87,20 +87,4 @@ The database is created with the `createdb()` function and populated by the `pop
 * Multi-line addresses and fields are assumed to belong to the same incident and are concatenated as part of the parsing logic.
 * Some incidents may not follow the expected pattern, which could lead to incomplete or incorrect rows being added to the database.
 * Assumes the PDF file structure remains consistent throughout the document.
-
-## To Do List:
-- [ ] README.md file create
-- [x] COLLABORATORS.md file create
-- [x] private repo and add people
-- [x] setup.py and setup.cfg
-- [x] main.py
-- [x] --incidents <url>
-- [x] fetchincidents(url)
-- [x] extractincidents(incident_data)
-- [x] createdb()
-- [x] name of the database as normanpd.db
-- [x] populatedb(db, incidents)
-- [x] status()
-- [x] pipenv run python -m pytest
-- [x] git tag v1.0
-- [x] git push origin v1.0
+* Assumes that the PDF exists.
