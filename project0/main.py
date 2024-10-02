@@ -84,11 +84,17 @@ def status():
     printables = cursor.fetchall()
     data = ''
     with open("resources/status.txt", "w") as file:
-        for i in printables:
-            file.write(f"{i[0]}|{i[1]}\n")
-            data += f"{i[0]}|{i[1]}\n"
-    print(data)
+        for i,v in enumerate(printables):
+            if v[0] == "Nature":
+                continue
+            if i != len(printables) - 1:
+                file.write(f"{v[0]}|{v[1]}\n")
+                data += f"{v[0]}|{v[1]}\n"
+            else:
+                file.write(f"{v[0]}|{v[1]}")
+                data += f"{v[0]}|{v[1]}"
     conn.close()
+    print(data)
     return data 
 
 if __name__ == "__main__":

@@ -40,7 +40,6 @@ MVA With Injuries|2
 Medical Call Pd Requested|3
 Motorist Assist|6
 Mutual Aid|3
-Nature|1
 Noise Complaint|2
 Open Door/Premises Check|2
 Overdose/Poisoning|4
