@@ -54,9 +54,9 @@ def extractincidents(data):
     
     
 def createdb():
-    if os.path.exists("resources/tutorial.db"):
-        os.remove("resources/tutorial.db")
-    conn = sqlite3.connect("resources/tutorial.db")
+    if os.path.exists("resources/normanpd.db"):
+        os.remove("resources/normanpd.db")
+    conn = sqlite3.connect("resources/normanpd.db")
     
     cursor = conn.cursor()
     
@@ -67,7 +67,7 @@ def createdb():
 
 
 def populatedb(separated_data):
-    conn = sqlite3.connect("resources/tutorial.db")
+    conn = sqlite3.connect("resources/normanpd.db")
     
     cursor = conn.cursor()
     
@@ -76,7 +76,7 @@ def populatedb(separated_data):
     conn.close()
 
 def status():
-    conn = sqlite3.connect("resources/tutorial.db")
+    conn = sqlite3.connect("resources/normanpd.db")
     
     cursor = conn.cursor()
     

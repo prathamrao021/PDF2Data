@@ -87,3 +87,13 @@ The database is created with the `createdb()` function and populated by the `pop
 * Multi-line addresses and fields are assumed to belong to the same incident and are concatenated as part of the parsing logic.
 * Some incidents may not follow the expected pattern, which could lead to incomplete or incorrect rows being added to the database.
 * Assumes the PDF file structure remains consistent throughout the document.
+
+## To Do List:
+- [ ] vfdvsf
+-[ ] README.md file create
+-[ ] COLLABORATORS.md file create
+[] private repo and add people
+[] setup.py and setup.cfg
+[] main.py
+[] --incidents <url>
+[] fetchincidents(url) 

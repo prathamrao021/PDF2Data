@@ -19,14 +19,14 @@ def test_extract_incidents():
 
 def test_create_db():
     createdb()
-    assert os.path.exists("resources/tutorial.db")
+    assert os.path.exists("resources/normanpd.db")
 
 def test_populate_db():
     data = fetchincidents("resources/incident1.pdf")
     separated_data = extractincidents(data)
     createdb()
     populatedb(separated_data)
-    conn = sqlite3.connect("resources/tutorial.db")
+    conn = sqlite3.connect("resources/normanpd.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM incidents")
     results = cursor.fetchall()
