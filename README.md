@@ -1,4 +1,4 @@
-# CIS6930FA24 - Project 0
+# PDF2Data
 
 **Name:** Pratham Rao
 
